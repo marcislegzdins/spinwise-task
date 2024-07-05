@@ -22,6 +22,7 @@ resource "kubernetes_manifest" "argocd_application_prometheus" {
           prune    = true
           selfHeal = true
         }
+        syncOptions = ["CreateNamespace=true"]
       }
     }
   }
