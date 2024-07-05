@@ -1,33 +1,22 @@
-terraform {
-  required_providers {
-    kind = {
-      source  = "tehcyx/kind"
-      version = "~> 0.5.1"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.11"
-    }
-    helm = {
-      source = "hashicorp/helm"
-      version = "~> 2.14.0"
-    }
-  }
+module "cluster" {
+  source = "./modules/cluster"
 }
 
-provider "kind" {}
-
-// 
-resource "kind_cluster" "default" {
-    name = "spinwise-cluster"
+module "argocd" {
+  source = "./modules/argocd"
+  depends_on = [module.cluster]
 }
 
-provider "kubernetes" {
-  config_path = "~/.kube/config"
+module "prometheus" {
+  source = "./modules/prometheus"
+  repo_url = var.repo_url
+  namespace = var.namespace
+  depends_on = [module.cluster, module.argocd]
 }
 
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config"
-  }
+module "grafana" {
+  source = "./modules/grafana"
+  repo_url = var.repo_url
+  namespace = var.namespace
+  depends_on = [module.cluster, module.argocd]
 }
