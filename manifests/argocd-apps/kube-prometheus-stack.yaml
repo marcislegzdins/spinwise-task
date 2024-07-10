@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/prometheus-community/helm-charts
-    targetRevision: main
-    chart: charts/kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 61.2.0
+    chart: kube-prometheus-stack
     helm:
       valueFiles:
         - values.yaml
