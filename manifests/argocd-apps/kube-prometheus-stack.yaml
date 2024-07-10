@@ -11,7 +11,10 @@ spec:
     chart: kube-prometheus-stack
     helm:
       valueFiles:
-        - manifests/argocd-apps/values.yaml
+      - $values/manifests/argocd-apps/values.yaml
+      - repoURL: 'https://github.com/marcislegzdins/spinwise-task.git'
+        targetRevision: dev
+        ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -19,3 +22,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+    - CreateNamespace=true
