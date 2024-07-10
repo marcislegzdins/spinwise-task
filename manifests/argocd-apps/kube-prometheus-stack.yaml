@@ -11,7 +11,7 @@ spec:
     chart: kube-prometheus-stack
     helm:
       valueFiles:
-        - values.yaml
+        - manifests/argocd-apps/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
